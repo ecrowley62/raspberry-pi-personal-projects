@@ -1,4 +1,5 @@
 from typing import Dict, List, Tuple, Optional, Union
+from venv import create
 import RPi.GPIO as GPIO
 
 
@@ -98,17 +99,23 @@ class SimpleGpio:
         else:
             return True
 
-    def get_channel(self, pin_number: int) -> GpioOutputChannel:
+    def get_channel(self, 
+                    pin_number: int,
+                    create_if_not_exists: bool = True
+                    ) -> GpioOutputChannel:
         """
             For the given pin number, return a channel object.
-            If a channel object has not been created yet by 
-            this interface, create one.
+            If a channel object does not exist, and the applicable
+            param is true, create the channel, else throw an error
         """
         if self.pin_is_in_use(pin_number):
             return self.channels[pin_number]
         else:
-            new_channel = GpioOutputChannel(pin_number)
-            return new_channel
+            if create_if_not_exists:
+                new_channel = GpioOutputChannel(pin_number)
+                return new_channel
+            else:
+                raise RuntimeError('Channel already exists!!')
         
     def turn_on_output(self, pin_number: int) -> bool:
         """ For the given pin, send a on signal to the channel """

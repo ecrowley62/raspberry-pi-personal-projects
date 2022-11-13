@@ -10,7 +10,7 @@ def main() -> None:
     # Create an interface for the LCD screen then
     # write a string to it
     lcd = CharLCD(I2C_PORT_EXPANDER, I2C_ADDRESS)
-    lcd.write_string('Hello Govena')
+    lcd.write_string('Tysha is beautiful :)')
 
 if __name__ == '__main__':
     main()

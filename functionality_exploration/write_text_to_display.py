@@ -12,5 +12,8 @@ def main() -> None:
     lcd = CharLCD(I2C_PORT_EXPANDER, I2C_ADDRESS)
     lcd.write_string('Tysha is amazing!!!')
 
+    lcd.close(clear=True)
+
+
 if __name__ == '__main__':
     main()

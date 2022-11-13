@@ -1,3 +1,10 @@
+# Secret files (credentials, etc..)
+**secrets.**
+
+# Scratch files containing code that should
+# NOTE be tracked in git
+**scratch.py**
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

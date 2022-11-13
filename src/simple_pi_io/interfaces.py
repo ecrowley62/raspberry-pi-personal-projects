@@ -46,7 +46,7 @@ class SimpleGpio:
         GPIO.setwarnings(self.set_warnings)
         return self
 
-    def __exit__(self) -> None:
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         channel_pins = [pin for pin in self.channels.keys()]
         GPIO.cleanup(channel_pins)
 

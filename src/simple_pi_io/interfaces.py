@@ -29,38 +29,17 @@ class GpioOutputChannel:
         self._setup_channel()
 
     def turn_on(self) -> bool:
-        """ 
-            Send an on signal to the channel. 
-            
-            Returns
-            -------
-            : bool
-                Operation status inidcator
-        """
+        """ Send an on signal to the channel """
         GPIO.output(self.number, GPIO.HIGH)
         return True
 
     def turn_off(self) -> bool:
-        """
-            Send an off signal to the channel
-
-            Returns
-            -------
-            : bool
-                Operation status indicator
-        """
+        """ Send an off signal to the channel """
         GPIO.output(self.number, GPIO.LOW)
         return True
 
     def cleanup(self) -> bool:
-        """
-            Delete the channel from the current context
-
-            Returns
-            ------
-            : bool
-                Operation status indicator
-        """
+        """ Delete the channel from the current context """
         GPIO.cleanup(self.number)
         return True
 

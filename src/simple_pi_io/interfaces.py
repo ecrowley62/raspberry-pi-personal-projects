@@ -91,7 +91,6 @@ class SimpleGpio:
             interface created. TODO: Actually do a global check to
             see if RPi.GPIO is using this pin anywhere.
         """
-        
         try:
             channel = self.channels[pin_number]
         except KeyError:

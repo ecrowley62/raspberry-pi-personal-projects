@@ -44,6 +44,7 @@ class SimpleGpio:
     def __enter__(self) -> None:
         GPIO.setmode(self.gpio_mode)
         GPIO.setwarnings(self.set_warnings)
+        return self
 
     def __exit__(self) -> None:
         channel_pins = [pin for pin in self.channels.keys()]

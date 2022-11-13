@@ -3,8 +3,21 @@ import RPi.GPIO as GPIO
 
 
 class GpioOutputChannel:
+    """ 
+        Object represents a RPi.GPIO output channel. The output
+        channel can be turned on/off but returns no data.
+
+        Params
+        ------
+        number : int
+            The board number for the pin used by this channel
+        initial_state : int, optional
+            The initial state the channel should be set to.
+            Defaults to low (off)
+    """
 
     def _setup_channel(self) -> None:
+        """ Create a GCPIO output channel"""
         GPIO.setup(self.number, GPIO.OUT, initial=self.initial_state)
 
     def __init__(self, 
@@ -16,14 +29,38 @@ class GpioOutputChannel:
         self._setup_channel()
 
     def turn_on(self) -> bool:
+        """ 
+            Send an on signal to the channel. 
+            
+            Returns
+            -------
+            : bool
+                Operation status inidcator
+        """
         GPIO.output(self.number, GPIO.HIGH)
         return True
 
     def turn_off(self) -> bool:
+        """
+            Send an off signal to the channel
+
+            Returns
+            -------
+            : bool
+                Operation status indicator
+        """
         GPIO.output(self.number, GPIO.LOW)
         return True
 
     def cleanup(self) -> bool:
+        """
+            Delete the channel from the current context
+
+            Returns
+            ------
+            : bool
+                Operation status indicator
+        """
         GPIO.cleanup(self.number)
         return True
 

@@ -1,6 +1,5 @@
 #!/usr/bin/python
 import time
-from unittest.mock import DEFAULT
 
 # Custom modules
 from src.simple_pi_io.interfaces import SimpleGpio

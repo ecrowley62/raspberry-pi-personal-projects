@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from RPLCD.i2c import CharLCD
 
-I2C_ADDRESS = '0x3f'
+I2C_ADDRESS = 0x3f
 I2C_PORT_EXPANDER = 'PCF8574'
 
 

@@ -82,8 +82,8 @@ class SimpleGpio:
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         """ Upon exiting the context, remove any channels that got created """
-        channel_pins = [pin for pin in self.channels.keys()]
-        GPIO.cleanup(channel_pins)
+        channel_ids = [pin_num for pin_num in self.channels.keys()]
+        GPIO.cleanup(channel_ids)
 
     def pin_is_in_use(self, pin_number: int) -> bool:
         """ 

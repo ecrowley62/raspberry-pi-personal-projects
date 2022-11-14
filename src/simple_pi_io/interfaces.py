@@ -113,6 +113,7 @@ class SimpleGpio:
         else:
             if create_if_not_exists:
                 new_channel = GpioOutputChannel(pin_number)
+                self.channels[pin_number] = new_channel
                 return new_channel
             else:
                 raise RuntimeError('Channel already exists!!')

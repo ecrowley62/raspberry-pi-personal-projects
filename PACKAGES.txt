@@ -1,3 +1,0 @@
-libgpiod2
-libgpiod-dev
-i2c-tools

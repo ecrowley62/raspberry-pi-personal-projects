@@ -13,7 +13,7 @@ DEFAULT_PIN = 15
 # Simple program for turning the LED off and on in a loop
 def main() -> None:
     with SimpleGpio() as gpio:
-        for _ in range(10):
+        for _ in range(5):
             print('Turning on LED')
             gpio.turn_on_output(pin_number=DEFAULT_PIN)
             time.sleep(SLEEP_FOR)

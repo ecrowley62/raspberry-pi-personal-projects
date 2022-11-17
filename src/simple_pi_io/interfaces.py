@@ -2,7 +2,7 @@ from typing import Dict, List, Tuple, Optional, Union
 from venv import create
 import RPi.GPIO as GPIO
 
-
+'''
 class GpioOutputChannel:
     """ 
         Object represents a RPi.GPIO output channel. The output
@@ -42,6 +42,35 @@ class GpioOutputChannel:
     def cleanup(self) -> bool:
         """ Delete the channel from the current context """
         GPIO.cleanup(self.number)
+        return True
+'''
+
+class GpioChannel:
+
+    def _setup_channel(self) -> None:
+        """ Create the GPIO channel """
+        if self.io_type == GPIO.OUT:
+            self._gpio_interface = GPIO.output
+        GPIO.setup(self.pin_number, self.io_type, initial=self.initial_state)
+
+    def __init__(self,
+                 pin_number: int,
+                 initial_state: int = GPIO.LOW,
+                 io_type: int = GPIO.OUT
+                 ) -> None:
+        self.pin_number = pin_number
+        self.initial_state = initial_state
+        self.io_type = io_type
+        self._gpio_interface = None
+
+    def turn_on(self) -> bool:
+        self._gpio_interface(self.pin_number, GPIO.HIGH)
+    
+    def turn_off(self) -> bool:
+        self._gpio_interface(self.pin_number, GPIO.LOW)
+
+    def cleanup(self) -> bool:
+        GPIO.cleanup(self.pin_number)
         return True
 
 
@@ -101,8 +130,9 @@ class SimpleGpio:
 
     def get_channel(self, 
                     pin_number: int,
-                    create_if_not_exists: bool = True
-                    ) -> GpioOutputChannel:
+                    create_if_not_exists: bool = True,
+                    create_channel_as_output: bool = True
+                    ) -> GpioChannel:
         """
             For the given pin number, return a channel object.
             If a channel object does not exist, and the applicable
@@ -112,7 +142,11 @@ class SimpleGpio:
             return self.channels[pin_number]
         else:
             if create_if_not_exists:
-                new_channel = GpioOutputChannel(pin_number)
+                if create_channel_as_output:
+                    io_type = GPIO.OUT
+                else:
+                    io_type = GPIO.IN
+                new_channel = GpioChannel(pin_number, io_type)
                 self.channels[pin_number] = new_channel
                 return new_channel
             else:

@@ -62,6 +62,7 @@ class GpioChannel:
         self.initial_state = initial_state
         self.io_type = io_type
         self._gpio_interface = None
+        self._setup_channel()
 
     def turn_on(self) -> bool:
         self._gpio_interface(self.pin_number, GPIO.HIGH)

@@ -10,9 +10,7 @@ class GpioChannel:
             self._gpio_interface = GPIO.output
             self._initial_state = GPIO.LOW
             self._io_type = GPIO.OUT
-            GPIO.setup(self.pin_number, 
-                       self._io_type, 
-                       initial_state=self._initial_state)
+            GPIO.setup(self.pin_number, self._io_type)
         else:
             self._gpio_interface = GPIO.input
             self._initial_state = GPIO.PUD_DOWN

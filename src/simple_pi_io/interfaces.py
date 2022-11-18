@@ -6,24 +6,35 @@ class GpioChannel:
 
     def _setup_channel(self) -> None:
         """ Create the GPIO channel """
-        if self.io_type == GPIO.OUT:
+        if self.is_output:
             self._gpio_interface = GPIO.output
-        GPIO.setup(self.pin_number, self.io_type, initial=self.initial_state)
+            self._initial_state = GPIO.LOW
+            self._io_type = GPIO.OUT
+            GPIO.setup(self.pin_number, 
+                       self._io_type, 
+                       initial_state=self._initial_state)
+        else:
+            self._gpio_interface = GPIO.input
+            self._initial_state = GPIO.PUD_DOWN
+            self._io_type = GPIO.IN
+            GPIO.setup(self.pin_number,
+                       self._io_type,
+                       pull_up_down=self._initial_state)
 
     def __init__(self,
                  pin_number: int,
-                 initial_state: int = GPIO.LOW,
-                 io_type: int = GPIO.OUT
+                 is_output: bool = True
                  ) -> None:
         self.pin_number = pin_number
-        self.initial_state = initial_state
-        self.io_type = io_type
+        self.is_output = is_output
+        self._io_type = None
+        self._initial_state = None
         self._gpio_interface = None
         self._setup_channel()
 
     def turn_on(self) -> bool:
         self._gpio_interface(self.pin_number, GPIO.HIGH)
-    
+
     def turn_off(self) -> bool:
         self._gpio_interface(self.pin_number, GPIO.LOW)
 
@@ -100,11 +111,8 @@ class SimpleGpio:
             return self.channels[pin_number]
         else:
             if create_if_not_exists:
-                if create_channel_as_output:
-                    io_type = GPIO.OUT
-                else:
-                    io_type = GPIO.IN
-                new_channel = GpioChannel(pin_number, io_type)
+                is_output = True if create_channel_as_output else False 
+                new_channel = GpioChannel(pin_number, is_output)
                 self.channels[pin_number] = new_channel
                 return new_channel
             else:

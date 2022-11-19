@@ -11,10 +11,7 @@ def setup() -> None:
 
 def register_button_push_input() -> None:
     if GPIO.input(BUTTON_PIN) == GPIO.HIGH:
-        print("Button has been pushed")
-    else:
-        print("Button has NOT been pushed")
-    print('\n')
+        print("Button has been pushed\n")
 
 def main() -> None:
     setup()

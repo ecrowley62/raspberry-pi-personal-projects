@@ -1,4 +1,3 @@
-from tkinter import BUTT
 #!/usr/bin/python3
 from typing import Dict, List, Tuple
 import RPi.GPIO as GPIO
